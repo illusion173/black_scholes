@@ -8,6 +8,15 @@ pub enum OptionType {
     Put,
 }
 
+impl Display for OptionType {
+    fn fmt(&self, f: &mut Formatter) -> fmtResult {
+        match self {
+            OptionType::Call => write!(f, "Call"),
+            OptionType::Put => write!(f, "Put"),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Inputs {
     /// Type of Option (Call or Put)
@@ -50,5 +59,25 @@ impl Inputs {
             t,
             sigma,
         }
+    }
+}
+
+impl Display for Inputs {
+    fn fmt(&self, f: &mut Formatter) -> fmtResult {
+        writeln!(f, "Option Type: {}", self.option_type)?;
+        writeln!(f, "Stock Price: {:.2}", self.s)?;
+        writeln!(f, "Strike Price: {:.2}", self.k)?;
+        match self.p {
+            Some(p) => writeln!(f, "Option Price: {:.2}", p)?,
+            None => writeln!(f, "Option Price: None")?,
+        }
+        writeln!(f, "Risk-free Rate: {:.4}", self.r)?;
+        writeln!(f, "Dividend Yield: {:.4}", self.q)?;
+        writeln!(f, "Time to Maturity: {:.4}", self.t)?;
+        match self.sigma {
+            Some(sigma) => writeln!(f, "Volatility: {:.4}", sigma)?,
+            None => writeln!(f, "Volatility: None")?,
+        }
+        Ok(())
     }
 }
