@@ -1,3 +1,5 @@
+use serde::Serialize;
+mod inputs;
 fn main() {
-    println!("Hello, world!");
+    println!("Hello");
 }
